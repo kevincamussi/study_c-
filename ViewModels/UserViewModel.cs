@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using teste.Commands;
 using teste.Models;
+using teste.Repositories;
 using teste.Views;
 
 namespace teste.ViewModels
@@ -22,8 +23,8 @@ namespace teste.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand RemoveUserCommand { get; }
         public ICommand NavigateToHomeCommand { get; }
+        public ObservableCollection<User> Users => _userRepository.GetUsers();
 
-        public ObservableCollection<User> Users { get; set; }
 
         // Dados do Usuário
         private string _name;
@@ -128,12 +129,12 @@ namespace teste.ViewModels
         public string Error => null;
 
         // Construtor
-        public UserViewModel(NavigationService navigationService)
+        public UserViewModel(NavigationService navigationService, UserRepository userRepository)
         {
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             SubmitCommand = new RelayCommand(ExecuteSubmit);
             RemoveUserCommand = new RelayCommand(ExecuteRemoveUser);
-            Users = new ObservableCollection<User>();
             NavigateToHomeCommand = new RelayCommand(ExecuteNavigateToHome);
         }
 
@@ -141,16 +142,10 @@ namespace teste.ViewModels
 
         public void ExecuteNavigateToHome(object parameter)
         {
-            //var firstPage = new FirstPage();
             _navigationService.GoBack();
         }
 
-        // Método para adicionar usuário
-        public void AddUser(User userData)
-        {
-            Users.Add(userData);
-        }
-
+      
         //Debug exibir lista
         public void DisplayUsersInConsole()
         {
@@ -161,14 +156,14 @@ namespace teste.ViewModels
             }
         }
 
-        // Método para remover usuário
+        //Método para remover usuário
 
         private void ExecuteRemoveUser(object parameter)
         {
             if (SelectedUser != null)
             {
-                Users.Remove(SelectedUser);
-                SelectedUser = null; 
+                _userRepository.RemoveUser(SelectedUser);
+                SelectedUser = null;
                 OnPropertyChanged(nameof(Users));
             }
             DisplayUsersInConsole();
@@ -227,7 +222,7 @@ namespace teste.ViewModels
                 Phone = this.Phone,
             };
 
-            Users.Add(userData);
+            _userRepository.AddUser(userData);
 
             var dataDisplayPage = new DataDisplayPage(this);
             if (_navigationService != null)

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using teste.Repositories;
 using teste.ViewModels;
 
 namespace teste.Views
@@ -24,13 +25,13 @@ namespace teste.Views
         public FirstPage()
         {
             InitializeComponent();
-            Loaded += FirstPage_Loaded; // Assine o evento Loaded
+            Loaded += FirstPage_Loaded;
         }
 
         private void FirstPage_Loaded(object sender, RoutedEventArgs e)
         {
-            // Agora o NavigationService está disponível
-            DataContext = new UserViewModel(NavigationService);
+            var userRepository = new UserRepository();
+            DataContext = new UserViewModel(NavigationService,userRepository);
         }
     }
 }

@@ -22,13 +22,6 @@ namespace teste.Views
     /// </summary>
     public partial class DataDisplayPage : Page
     {
-        //public DataDisplayPage(User userData)
-        //{
-        //    InitializeComponent();
-        //    //UserDataTextBlock.Text = userData;
-        //    DataContext = userData;
-        //}
-
         public DataDisplayPage(UserViewModel userViewModel)
         {
             InitializeComponent();
