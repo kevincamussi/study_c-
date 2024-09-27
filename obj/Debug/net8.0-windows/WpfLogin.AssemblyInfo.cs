@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WpfLogin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cdf6bb23af36b20b63064efb2449827879f80b8c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42eae8b7bf6be5ae8e9b3a04deef69cd60867e26")]
 [assembly: System.Reflection.AssemblyProductAttribute("WpfLogin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WpfLogin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

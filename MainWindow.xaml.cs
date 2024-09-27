@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfLogin.Data;
 
 namespace WpfLogin
 {
@@ -19,6 +20,10 @@ namespace WpfLogin
         public MainWindow()
         {
             InitializeComponent();
+            var dbManager = new DataBaseManager();
+            dbManager.CreateDataBase();
+            dbManager.CreateTable();
+
         }
     }
 }
