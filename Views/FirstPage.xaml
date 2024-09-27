@@ -9,7 +9,7 @@
       Title="FirstPage">
 
     <Grid Background="White" Margin="40">
-        <StackPanel>
+        <StackPanel >
             <TextBlock Text="Digite seu nome"/>
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="0,8"/>
 

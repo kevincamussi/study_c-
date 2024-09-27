@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using teste.Models;
+using teste.ViewModels;
 
 namespace teste.Views
 {
@@ -20,11 +22,17 @@ namespace teste.Views
     /// </summary>
     public partial class DataDisplayPage : Page
     {
-        public DataDisplayPage(string userData)
+        //public DataDisplayPage(User userData)
+        //{
+        //    InitializeComponent();
+        //    //UserDataTextBlock.Text = userData;
+        //    DataContext = userData;
+        //}
+
+        public DataDisplayPage(UserViewModel userViewModel)
         {
             InitializeComponent();
-            UserDataTextBlock.Text = userData;
-
+            DataContext = userViewModel; 
         }
     }
 }

@@ -4,14 +4,37 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:teste.Views"
+      xmlns:viewmodels="clr-namespace:teste.ViewModels" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DataDisplayPage">
 
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Dados do usuário: "/>
-            <TextBlock x:Name="UserDataTextBlock"/>
+        <StackPanel >
+            <!--<TextBlock Text="Dados do usuário: "/>-->
+            <!--<TextBlock x:Name="UserDataTextBlock"/>-->
+            <!--<TextBlock Text="{Binding Name}" />-->
+            <TextBlock Text="Lista de Usuários:" FontWeight="Bold" FontSize="16"/>
+            <ListBox ItemsSource="{Binding Users}" Margin="10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Email}"/>
+                            <TextBlock Text="{Binding City}" />
+                            <TextBlock Text="{Binding Region}"/>
+                            <TextBlock Text="{Binding PostalCode}" />
+                            <TextBlock Text="{Binding Country}"/>
+                            <TextBlock Text="{Binding Phone}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+            <Button Content="Remover Usuário" Command="{Binding RemoveUserCommand}" Margin="0,10,0,0"/>
         </StackPanel>
+
+
     </Grid>
 </Page>
