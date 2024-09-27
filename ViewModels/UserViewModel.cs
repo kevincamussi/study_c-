@@ -21,6 +21,7 @@ namespace teste.ViewModels
         // Propriedades
         public ICommand SubmitCommand { get; }
         public ICommand RemoveUserCommand { get; }
+        public ICommand NavigateToHomeCommand { get; }
 
         public ObservableCollection<User> Users { get; set; }
 
@@ -133,6 +134,15 @@ namespace teste.ViewModels
             SubmitCommand = new RelayCommand(ExecuteSubmit);
             RemoveUserCommand = new RelayCommand(ExecuteRemoveUser);
             Users = new ObservableCollection<User>();
+            NavigateToHomeCommand = new RelayCommand(ExecuteNavigateToHome);
+        }
+
+        //Método para voltar para pagina inicial
+
+        public void ExecuteNavigateToHome(object parameter)
+        {
+            //var firstPage = new FirstPage();
+            _navigationService.GoBack();
         }
 
         // Método para adicionar usuário
