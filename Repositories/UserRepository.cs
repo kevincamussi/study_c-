@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using teste.Models;
 
 namespace teste.Repositories
@@ -15,13 +17,15 @@ namespace teste.Repositories
     {
         private readonly ObservableCollection<User> _users;
         private int _nextId;
+        private readonly string _connectionString; ///
 
         private const string FilePath = "users.json";
         public UserRepository()
         {
             _users = new ObservableCollection<User>();
+            _connectionString = "Server=localhost;Database=users;User ID=root;Password=ca7458990;SslMode=None;";
             LoadUsers();
-            _nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
+            //_nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
         }
 
         public ObservableCollection<User> GetUsers() => _users;
@@ -32,34 +36,68 @@ namespace teste.Repositories
             {
                 throw new ArgumentNullException(nameof(user));
             }
-                user.Id = _nextId++;
-                _users.Add(user);
-                SaveUsers();
-        }
-
-        public void SaveUsers()
-        {
+            //user.Id = _nextId++;
+            //_users.Add(user);
+            //SaveUsers();
             try
             {
-                var json = JsonConvert.SerializeObject(_users);
-                File.WriteAllText(FilePath, json);
+                _users.Add(user);
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = @"
+                INSERT INTO usuarios (nome, email, cidade, regiao, cep, pais, telefone)
+                VALUES (@Nome, @Email, @Cidade, @Regiao, @Cep, @Pais, @Telefone)";
+
+                    //command.Parameters.AddWithValue("@Id", user.Id);
+                    command.Parameters.AddWithValue("@Nome", user.Name);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    command.Parameters.AddWithValue("@Cidade", user.City);
+                    command.Parameters.AddWithValue("@Regiao", user.Region);
+                    command.Parameters.AddWithValue("@Cep", user.PostalCode);
+                    command.Parameters.AddWithValue("@Pais", user.Country);
+                    command.Parameters.AddWithValue("@Telefone", user.Phone);
+
+                    command.ExecuteNonQuery();
+                }
+                
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show($"Erro ao adicionar ao banco de dados  {ex.Number}: {ex.Message}");
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show($"Erro ao salvar dados {ex.Message}");
+                // Trate outras exceções
+                System.Windows.MessageBox.Show($"Erro: {ex.Message}");
             }
+
         }
+
+        //public void SaveUsers()
+        //{
+        //    try
+        //    {
+        //        var json = JsonConvert.SerializeObject(_users);
+        //        File.WriteAllText(FilePath, json);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Windows.MessageBox.Show($"Erro ao salvar dados {ex.Message}");
+        //    }
+        //}
 
         public void RemoveUser(User user)
         {
             if (user == null)
             {
-                throw new ArgumentNullException(nameof (user));
+                throw new ArgumentNullException(nameof(user));
             }
             if (_users.Contains(user))
             {
                 _users.Remove(user);
-                SaveUsers();
+                //SaveUsers();
             }
             else
             {
@@ -71,24 +109,60 @@ namespace teste.Repositories
         {
             try
             {
-                if (File.Exists(FilePath))
+                using (var connection = new MySqlConnection(_connectionString))
                 {
-                    var json = File.ReadAllText(FilePath);
-                    var users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
-                    if (users != null)
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "SELECT * FROM usuarios";
+                    using (var reader = command.ExecuteReader())
                     {
-                        foreach (var user in users)
+                        while (reader.Read())
                         {
+                            var user = new User()
+                            {
+                                Id = reader.GetInt32("id"),
+                                Name = reader.GetString("nome"),
+                                Email = reader.GetString("email"),
+                                City = reader.GetString("cidade"),
+                                Region = reader.GetString("regiao"),
+                                PostalCode = reader.GetString("cep"),
+                                Country = reader.GetString("pais"),
+                                Phone = reader.GetString("telefone")
+                            };
                             _users.Add(user);
                         }
+
                     }
-                    _nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
                 }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show($"Erro ao carregar dados do banco de dados {ex.Number} {ex.Message}");
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show($"Erro ao carregar dados {ex.Message}");
+                System.Windows.MessageBox.Show($"Erro {ex.Message}");
             }
+            //try
+            //{
+            //    if (File.Exists(FilePath))
+            //    {
+            //        var json = File.ReadAllText(FilePath);
+            //        var users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
+            //        if (users != null)
+            //        {
+            //            foreach (var user in users)
+            //            {
+            //                _users.Add(user);
+            //            }
+            //        }
+            //        _nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Windows.MessageBox.Show($"Erro ao carregar dados {ex.Message}");
+            //}
         }
 
         public bool UserExists(string name)
