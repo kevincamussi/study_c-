@@ -133,6 +133,7 @@ namespace teste.ViewModels
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            
             SubmitCommand = new RelayCommand(ExecuteSubmit);
             RemoveUserCommand = new RelayCommand(ExecuteRemoveUser);
             NavigateToHomeCommand = new RelayCommand(ExecuteNavigateToHome);

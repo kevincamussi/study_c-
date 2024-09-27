@@ -23,3 +23,6 @@ E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\ref\teste.dll
 E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\Views\DataDisplayPage.g.cs
 E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\Views\DataDisplayPage.baml
 E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\teste.sourcelink.json
+E:\projetos\visual-studio\teste\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\teste.csproj.AssemblyReference.cache
+E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\teste.csproj.Up2Date
