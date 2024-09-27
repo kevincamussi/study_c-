@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 E:\projetos\visual-studio\teste\App.xaml
-2-2084344112
+3-2009868226
 
-101585681677
+11-1489469292
 198-556154604
-MainWindow.xaml;Views\FirstPage.xaml;
+MainWindow.xaml;Views\DataDisplayPage.xaml;Views\FirstPage.xaml;
 
 True
 

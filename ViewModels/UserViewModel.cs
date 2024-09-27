@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using teste.Commands;
+using teste.Views;
 
 namespace teste.ViewModels
 {
     public class UserViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private readonly NavigationService _navigationService;
+
         private string _name;
         private string _email;
         private string _city;
@@ -103,10 +107,18 @@ namespace teste.ViewModels
 
         public ICommand SubmitCommand { get; }
 
-        public UserViewModel()
+        public UserViewModel(NavigationService navigationService)
         {
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             SubmitCommand = new RelayCommand(ExecuteSubmit);
         }
+
+        
+
+        //public UserViewModel()
+        //{
+        //    SubmitCommand = new RelayCommand(ExecuteSubmit);
+        //}
 
 
         public string this[string columnName]
@@ -116,11 +128,10 @@ namespace teste.ViewModels
                 var validationContext = new ValidationContext(this) { MemberName = columnName };
                 var results = new List<ValidationResult>();
 
-                // Obter a propriedade pelo nome e verificar se ela é acessível
                 var property = GetType().GetProperty(columnName);
                 if (property != null && property.GetIndexParameters().Length == 0)
                 {
-                    var value = property.GetValue(this); // Obter o valor da propriedade
+                    var value = property.GetValue(this); 
                     Validator.TryValidateProperty(value, validationContext, results);
                 }
 
@@ -128,8 +139,37 @@ namespace teste.ViewModels
             }
         }
 
-        private void ExecuteSubmit(object parameter)
+        //private void ExecuteSubmit(object parameter)
 
+        //{
+        //    var hasErrors = false;
+        //    var errors = new List<string>();
+
+        //    foreach (var property in typeof(UserViewModel).GetProperties())
+        //    {
+        //        var error = this[property.Name];
+        //        if (!string.IsNullOrEmpty(error))
+        //        {
+        //            hasErrors = true;
+        //            errors.Add(error);
+        //        }
+
+
+        //        if (hasErrors)
+        //        {
+        //            System.Windows.MessageBox.Show(string.Join("\n", errors));
+        //            return;
+        //        }
+
+        //    }
+
+
+        //    System.Windows.MessageBox.Show($"Nome: {Name}\nE-mail: {Email}\nCidade: {City}\nEstado: {Region}\nCEP: {PostalCode}\nPaís: {Country}\nTelefone: {Phone}");
+        //}
+
+        // Construtor
+    
+        private void ExecuteSubmit(object parameter)
         {
             var hasErrors = false;
             var errors = new List<string>();
@@ -142,32 +182,31 @@ namespace teste.ViewModels
                     hasErrors = true;
                     errors.Add(error);
                 }
-
-
-                if (hasErrors)
-                {
-                    System.Windows.MessageBox.Show(string.Join("\n", errors));
-                    return;
-                }
-
             }
 
+            if (hasErrors)
+            {
+                System.Windows.MessageBox.Show(string.Join("\n", errors));
+                return;
+            }
 
-            System.Windows.MessageBox.Show($"Nome: {Name}\nE-mail: {Email}\nCidade: {City}\nEstado: {Region}\nCEP: {PostalCode}\nPaís: {Country}\nTelefone: {Phone}");
+            // Concatenar os dados em uma string
+            var userData = $"Nome: {Name}\nE-mail: {Email}\nCidade: {City}\nEstado: {Region}\nCEP: {PostalCode}\nPaís: {Country}\nTelefone: {Phone}";
+
+            // Navegar para a nova página
+            var dataDisplayPage = new DataDisplayPage(userData);
+            //NavigationService.Navigate(dataDisplayPage);
+            if (_navigationService != null)
+            {
+                _navigationService.Navigate(dataDisplayPage);
+                
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Navegação falhou: NavigationService não está disponível.");
+            }
         }
 
-        //private void ExecuteSubmit(object parameter)
-        //{
-        //    // Exibe apenas o nome
-        //    if (!string.IsNullOrEmpty(Name))
-        //    {
-        //        System.Windows.MessageBox.Show($"Nome: {Name}");
-        //    }
-        //    else
-        //    {
-        //        System.Windows.MessageBox.Show("Nome é obrigatório!");
-        //    }
-        //}
 
 
         public event PropertyChangedEventHandler PropertyChanged;

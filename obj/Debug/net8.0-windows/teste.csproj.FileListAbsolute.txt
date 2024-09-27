@@ -20,3 +20,6 @@ E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\refint\teste.dll
 E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\teste.pdb
 E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\teste.genruntimeconfig.cache
 E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\ref\teste.dll
+E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\Views\DataDisplayPage.g.cs
+E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\Views\DataDisplayPage.baml
+E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\teste.sourcelink.json

@@ -24,7 +24,13 @@ namespace teste.Views
         public FirstPage()
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
+            Loaded += FirstPage_Loaded; // Assine o evento Loaded
+        }
+
+        private void FirstPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Agora o NavigationService está disponível
+            DataContext = new UserViewModel(NavigationService);
         }
     }
 }
