@@ -19,3 +19,6 @@ E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\refint\WpfLogin.dll
 E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\WpfLogin.pdb
 E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\WpfLogin.genruntimeconfig.cache
 E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\ref\WpfLogin.dll
+E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\Views\WinPrincipal.g.cs
+E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\Views\WinPrincipal.baml
+E:\projetos\visual-studio\WpfLogin\obj\Debug\net8.0-windows\WpfLogin.sourcelink.json

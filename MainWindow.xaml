@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:WpfLogin"
         xmlns:viewModel ="clr-namespace:WpfLogin.ViewModels"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800"
+        Title="Login" Height="300" Width="400"
         WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterScreen"
         >
 
     <Window.Resources>
