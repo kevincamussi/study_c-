@@ -14,12 +14,14 @@ namespace teste.Repositories
     public class UserRepository
     {
         private readonly ObservableCollection<User> _users;
+        private int _nextId;
 
         private const string FilePath = "users.json";
         public UserRepository()
         {
             _users = new ObservableCollection<User>();
             LoadUsers();
+            _nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
         }
 
         public ObservableCollection<User> GetUsers() => _users;
@@ -30,6 +32,7 @@ namespace teste.Repositories
             {
                 throw new ArgumentNullException(nameof(user));
             }
+                user.Id = _nextId++;
                 _users.Add(user);
                 SaveUsers();
         }
@@ -79,6 +82,7 @@ namespace teste.Repositories
                             _users.Add(user);
                         }
                     }
+                    _nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
                 }
             }
             catch (Exception ex)

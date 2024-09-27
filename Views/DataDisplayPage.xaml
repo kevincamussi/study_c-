@@ -16,6 +16,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
+                            <TextBlock Text="{Binding Id}" FontWeight="Bold"/>
                             <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
                             <TextBlock Text="{Binding Email}"/>
                             <TextBlock Text="{Binding City}" />

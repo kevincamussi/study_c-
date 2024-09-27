@@ -34,6 +34,7 @@ namespace teste.ViewModels
         private string _postalCode;
         private string _country;
         private string _phone;
+        private int _id;
 
         // Validações
         [Required(ErrorMessage = "Nome é obrigatório")]
