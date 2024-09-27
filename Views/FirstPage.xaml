@@ -5,10 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:teste.Views" xmlns:viewmodels="clr-namespace:teste.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:UserViewModel}"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="800"
-      Title="FirstPage">
+      Height="600" Width="400"
+      Title="FirstPage"
+      
+      >
 
-    <Grid Background="White" Margin="40">
+    <Grid Background="White" Margin="40" HorizontalAlignment="Center">
         <StackPanel >
             <TextBlock Text="Digite seu nome"/>
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="0,8"/>
