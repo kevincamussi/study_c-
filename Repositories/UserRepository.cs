@@ -91,5 +91,11 @@ namespace teste.Repositories
             }
         }
 
+        public bool UserExists(string name)
+        {
+            return _users.Any(u => u.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+
     }
 }

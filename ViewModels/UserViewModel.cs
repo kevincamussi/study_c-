@@ -197,6 +197,12 @@ namespace teste.ViewModels
             var hasErrors = false;
             var errors = new List<string>();
 
+            if (_userRepository.UserExists(Name))
+            {
+                errors.Add("Já existe um usuário com o nome na lista");
+                hasErrors = true;
+            }
+
             foreach (var property in typeof(UserViewModel).GetProperties())
             {
                 var error = this[property.Name];
