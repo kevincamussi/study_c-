@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using teste.Commands;
@@ -19,10 +17,14 @@ namespace teste.ViewModels
     {
         private readonly NavigationService _navigationService;
         private readonly UserRepository _userRepository;
+
+        // Propriedades
         public ICommand SubmitCommand { get; }
-        public string Error =>  null;
+        public ICommand RemoveUserCommand { get; }
 
+        public ObservableCollection<User> Users { get; set; }
 
+        // Dados do Usuário
         private string _name;
         private string _email;
         private string _city;
@@ -31,6 +33,7 @@ namespace teste.ViewModels
         private string _country;
         private string _phone;
 
+        // Validações
         [Required(ErrorMessage = "Nome é obrigatório")]
         public string Name
         {
@@ -42,8 +45,8 @@ namespace teste.ViewModels
             }
         }
 
-        [Required(ErrorMessage ="E-mail é obrigatório")]
-        [EmailAddress(ErrorMessage ="E-mail inválido")]
+        [Required(ErrorMessage = "E-mail é obrigatório")]
+        [EmailAddress(ErrorMessage = "E-mail inválido")]
         public string Email
         {
             get => _email;
@@ -65,7 +68,7 @@ namespace teste.ViewModels
             }
         }
 
-        [Required(ErrorMessage ="O estado é obrigatório")]
+        [Required(ErrorMessage = "O estado é obrigatório")]
         public string Region
         {
             get => _region;
@@ -88,7 +91,6 @@ namespace teste.ViewModels
         }
 
         [Required(ErrorMessage = "O país é obrigatório")]
-
         public string Country
         {
             get => _country;
@@ -100,52 +102,70 @@ namespace teste.ViewModels
         }
 
         [Required(ErrorMessage = "O telefone é obrigatório")]
-
         public string Phone
         {
             get => _phone;
             set
             {
                 _phone = value;
-                OnPropertyChanged(nameof(Phone));    
+                OnPropertyChanged(nameof(Phone));
             }
         }
-        public ICommand RemoveUserCommand { get; }
-        public ObservableCollection<User> Users { get; set; }
+
+        // Propriedade para usuário selecionado
+        private User _selectedUser;
+        public User SelectedUser
+        {
+            get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
+
+        public string Error => null;
+
+        // Construtor
         public UserViewModel(NavigationService navigationService)
         {
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             SubmitCommand = new RelayCommand(ExecuteSubmit);
-            //_userRepository = new UserRepository();
-            Users = new ObservableCollection<User>();
             RemoveUserCommand = new RelayCommand(ExecuteRemoveUser);
-
+            Users = new ObservableCollection<User>();
         }
 
+        // Método para adicionar usuário
+        public void AddUser(User userData)
+        {
+            Users.Add(userData);
+        }
 
+        //Debug exibir lista
+        public void DisplayUsersInConsole()
+        {
+            Debug.WriteLine("Lista de Usuários:");
+            foreach (var user in Users)
+            {
+                Debug.WriteLine($"Nome: {user.Name}, E-mail: {user.Email}, Cidade: {user.City}, Região: {user.Region}, CEP: {user.PostalCode}, País: {user.Country}, Telefone: {user.Phone}");
+            }
+        }
 
-        //public UserViewModel()
-        //{
-        //    SubmitCommand = new RelayCommand(ExecuteSubmit);
-        //}
+        // Método para remover usuário
+
         private void ExecuteRemoveUser(object parameter)
         {
-            // Verifica se existe um usuário selecionado e remove
-            if (parameter is User userToRemove && Users.Contains(userToRemove))
+            if (SelectedUser != null)
             {
-                Users.Remove(userToRemove);
-                // Opcionalmente, você pode navegar de volta ou mostrar uma mensagem de confirmação
-                System.Windows.MessageBox.Show("Usuário removido com sucesso.");
-
-                // Navegar de volta ou realizar qualquer outra ação desejada
-                _navigationService.GoBack();
+                Users.Remove(SelectedUser);
+                SelectedUser = null; 
+                OnPropertyChanged(nameof(Users));
             }
-            else
-            {
-                System.Windows.MessageBox.Show("Usuário não encontrado.");
-            }
+            DisplayUsersInConsole();
         }
 
+
+        // Validação de propriedades
         public string this[string columnName]
         {
             get
@@ -156,7 +176,7 @@ namespace teste.ViewModels
                 var property = GetType().GetProperty(columnName);
                 if (property != null && property.GetIndexParameters().Length == 0)
                 {
-                    var value = property.GetValue(this); 
+                    var value = property.GetValue(this);
                     Validator.TryValidateProperty(value, validationContext, results);
                 }
 
@@ -164,45 +184,9 @@ namespace teste.ViewModels
             }
         }
 
-        //private void ExecuteSubmit(object parameter)
-
-        //{
-        //    var hasErrors = false;
-        //    var errors = new List<string>();
-
-        //    foreach (var property in typeof(UserViewModel).GetProperties())
-        //    {
-        //        var error = this[property.Name];
-        //        if (!string.IsNullOrEmpty(error))
-        //        {
-        //            hasErrors = true;
-        //            errors.Add(error);
-        //        }
-
-
-        //        if (hasErrors)
-        //        {
-        //            System.Windows.MessageBox.Show(string.Join("\n", errors));
-        //            return;
-        //        }
-
-        //    }
-
-
-        //    System.Windows.MessageBox.Show($"Nome: {Name}\nE-mail: {Email}\nCidade: {City}\nEstado: {Region}\nCEP: {PostalCode}\nPaís: {Country}\nTelefone: {Phone}");
-        //}
-
-        // Construtor
-
-
-        public void AddUser(User userData)
-        {
-            Users.Add(userData);
-        }
+        // Método para enviar dados
         private void ExecuteSubmit(object parameter)
         {
-           
-
             var hasErrors = false;
             var errors = new List<string>();
 
@@ -222,7 +206,6 @@ namespace teste.ViewModels
                 return;
             }
 
-            //var userData = $"Nome: {Name}\nE-mail: {Email}\nCidade: {City}\nEstado: {Region}\nCEP: {PostalCode}\nPaís: {Country}\nTelefone: {Phone}";
             var userData = new User()
             {
                 Name = this.Name,
@@ -234,17 +217,12 @@ namespace teste.ViewModels
                 Phone = this.Phone,
             };
 
-            //_userRepository.AddUser(user);
             Users.Add(userData);
 
-
             var dataDisplayPage = new DataDisplayPage(this);
-            
-
             if (_navigationService != null)
             {
                 _navigationService.Navigate(dataDisplayPage);
-                
             }
             else
             {
@@ -252,14 +230,12 @@ namespace teste.ViewModels
             }
         }
 
-
-
+        // Evento de alteração de propriedade
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }
