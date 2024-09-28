@@ -22,6 +22,8 @@ namespace teste.ViewModels
         // Propriedades
         public ICommand SubmitCommand { get; }
         public ICommand RemoveUserCommand { get; }
+        public ICommand EditUserCommand { get; }
+        public ICommand SaveUserCommand { get; }
         public ICommand NavigateToHomeCommand { get; }
         public ObservableCollection<User> Users => _userRepository.GetUsers();
 
@@ -36,8 +38,10 @@ namespace teste.ViewModels
         private string _phone;
         private int _id;
 
+        
         // Validações
         [Required(ErrorMessage = "Nome é obrigatório")]
+
         public string Name
         {
             get => _name;
@@ -127,6 +131,8 @@ namespace teste.ViewModels
             }
         }
 
+  
+
         public string Error => null;
 
         // Construtor
@@ -136,6 +142,8 @@ namespace teste.ViewModels
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             SubmitCommand = new RelayCommand(ExecuteSubmit);
             RemoveUserCommand = new RelayCommand(ExecuteRemoveUser);
+            EditUserCommand = new RelayCommand(ExecuteEditUser);
+            SaveUserCommand = new RelayCommand(ExecuteSaveUser);
             NavigateToHomeCommand = new RelayCommand(ExecuteNavigateToHome);
         }
 
@@ -146,7 +154,10 @@ namespace teste.ViewModels
             _navigationService.GoBack();
         }
 
+     
       
+
+
         //Debug exibir lista
         public void DisplayUsersInConsole()
         {
@@ -157,21 +168,7 @@ namespace teste.ViewModels
             }
         }
 
-        //Método para remover usuário
-
-        private void ExecuteRemoveUser(object parameter)
-        {
-            if (SelectedUser != null)
-            {
-
-                _userRepository.RemoveUser(SelectedUser);
-                Users.Remove(SelectedUser);
-                //_userRepository.LoadUsers();
-                SelectedUser = null;
-                OnPropertyChanged(nameof(Users));
-            }
-            DisplayUsersInConsole();
-        }
+   
 
 
         // Validação de propriedades
@@ -244,6 +241,46 @@ namespace teste.ViewModels
                 System.Windows.MessageBox.Show("Navegação falhou: NavigationService não está disponível.");
             }
         }
+
+        //Método para remover usuário
+
+        private void ExecuteRemoveUser(object parameter)
+        {
+            if (SelectedUser != null)
+            {
+
+                _userRepository.RemoveUser(SelectedUser);
+                Users.Remove(SelectedUser);
+                //_userRepository.LoadUsers();
+                SelectedUser = null;
+                OnPropertyChanged(nameof(Users));
+            }
+            DisplayUsersInConsole();
+        }
+
+        // Método para editar usuario
+
+        private void ExecuteEditUser(object parameter)
+        {
+            if (SelectedUser != null)
+            {
+                SelectedUser.IsEditing = true; // Ativa o modo de edição
+            }
+        }
+
+        //Metodo salvar 
+        private void ExecuteSaveUser(object parameter)
+        {
+            if (SelectedUser != null)
+            {
+                _userRepository.UpdateUser(SelectedUser);
+                //SelectedUser.IsEditing = false; // Desativa o modo de edição
+                _userRepository.LoadUsers();            // Recarregar a lista de usuários se necessário
+                                                        //_userRepository.LoadUsers();
+            }
+        }
+
+
 
         // Evento de alteração de propriedade
         public event PropertyChangedEventHandler PropertyChanged;

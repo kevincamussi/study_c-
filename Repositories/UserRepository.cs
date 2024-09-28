@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -70,7 +72,6 @@ namespace teste.Repositories
             }
             catch (Exception ex)
             {
-                // Trate outras exceções
                 System.Windows.MessageBox.Show($"Erro: {ex.Message}");
             }
 
@@ -132,6 +133,39 @@ namespace teste.Repositories
             //}
         }
 
+        public void UpdateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof (user));
+            }
+            try
+            {   using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "UPDATE usuarios SET nome = @Nome, cidade = @Cidade, regiao = @Regiao, cep = @Cep, pais = @Pais, telefone = @Telefone WHERE Id = @Id";
+                    command.Parameters.AddWithValue("@Id", user.Id);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    command.Parameters.AddWithValue("@Nome", user.Name);
+                    command.Parameters.AddWithValue("@Cidade", user.City);
+                    command.Parameters.AddWithValue("@Regiao", user.Region);
+                    command.Parameters.AddWithValue("@Cep", user.PostalCode);
+                    command.Parameters.AddWithValue("@Pais", user.Country);
+                    command.Parameters.AddWithValue("@Telefone", user.Phone);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Windows.MessageBox.Show($"Erro ao editar os dados {ex.Number}  {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Erro ao editar os dados {ex.Message}");
+            }
+        }
+
         public void LoadUsers()
         {
             try
@@ -141,6 +175,10 @@ namespace teste.Repositories
                     connection.Open();
                     var command = connection.CreateCommand();
                     command.CommandText = "SELECT * FROM usuarios";
+
+                    // Limpa a lista antes de recarregar
+                    _users.Clear();
+
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -156,12 +194,13 @@ namespace teste.Repositories
                                 Country = reader.GetString("pais"),
                                 Phone = reader.GetString("telefone")
                             };
-                            _users.Add(user);
+                            _users.Add(user); // Adiciona o usuário à lista
                         }
-
                     }
                 }
             }
+           
+
             catch (MySqlException ex)
             {
                 System.Windows.MessageBox.Show($"Erro ao carregar dados do banco de dados {ex.Number} {ex.Message}");

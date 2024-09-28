@@ -4,31 +4,83 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:teste.Views"
-      xmlns:viewmodels="clr-namespace:teste.ViewModels" 
+      xmlns:viewmodels="clr-namespace:teste.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800"
-      Title="DataDisplayPage">
+      Title="DataDisplayPage"
+       xmlns:converters="clr-namespace:teste.Converters"
+      >
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+
+    </Page.Resources>
+
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="40">
-        <StackPanel >
-            <TextBlock Text="Lista de Usuários:" FontWeight="Bold" FontSize="16"/>
-            <ListBox ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" Margin="10">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Id}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Email}"/>
-                            <TextBlock Text="{Binding City}" />
-                            <TextBlock Text="{Binding Region}"/>
-                            <TextBlock Text="{Binding PostalCode}" />
-                            <TextBlock Text="{Binding Country}"/>
-                            <TextBlock Text="{Binding Phone}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <StackPanel >
+                <TextBlock Text="Lista de Usuários:" FontWeight="Bold" FontSize="16"/>
+                <ListBox ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" Margin="10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Id}" FontWeight="Bold"/>
+
+                                <TextBlock Text="{Binding Name}" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding Name}"  HorizontalAlignment="Stretch" 
+                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                               
+                                <TextBlock Text="{Binding Email}" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding Email}"   HorizontalAlignment="Stretch" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                                <TextBlock Text="{Binding City}" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding City}"   HorizontalAlignment="Stretch" 
+                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                                <TextBlock Text="{Binding Region}" 
+                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding Region}"   HorizontalAlignment="Stretch" 
+                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+
+                                <TextBlock Text="{Binding PostalCode}" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding PostalCode}"   HorizontalAlignment="Stretch" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                                <TextBlock Text="{Binding Country}" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding Country}"   HorizontalAlignment="Stretch" 
+                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                                <TextBlock Text="{Binding Phone}" 
+                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                <TextBox Text="{Binding Phone}"   HorizontalAlignment="Stretch" 
+                                Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+
+
+
+
+
+
+                                <!--<TextBlock Text="{Binding Email}"/>
+                                <TextBlock Text="{Binding City}" />
+                                <TextBlock Text="{Binding Region}"/>
+                                <TextBlock Text="{Binding PostalCode}" />
+                                <TextBlock Text="{Binding Country}"/>
+                                <TextBlock Text="{Binding Phone}"/>-->
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
                 <Button Width="400" Content="Remover Usuário" Command="{Binding RemoveUserCommand}" Margin="0,20" >
                     <Button.Style>
@@ -81,7 +133,9 @@
                         </Style>
                     </Button.Style>
                 </Button>
-        </StackPanel>
-    </Grid>
+                <Button Content="Editar" Command="{Binding EditUserCommand}" />
+                <Button Content="Salvar" Command="{Binding SaveUserCommand}" />
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Page>

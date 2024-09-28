@@ -39,3 +39,4 @@ E:\projetos\visual-studio\teste\bin\Debug\net8.0-windows\runtimes\win-x64\native
 E:\projetos\visual-studio\teste\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
 E:\projetos\visual-studio\teste\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
 E:\projetos\visual-studio\teste\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+E:\projetos\visual-studio\teste\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
