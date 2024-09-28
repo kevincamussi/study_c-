@@ -94,15 +94,35 @@ namespace teste.Repositories
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            if (_users.Contains(user))
+            try
             {
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "DELETE FROM usuarios WHERE id = @Id";
+                    command.Parameters.AddWithValue("@Id", user.Id);
+                    command.ExecuteNonQuery();
+                }
                 _users.Remove(user);
-                //SaveUsers();
             }
-            else
+            catch (MySqlException ex)
             {
-                throw new InvalidOperationException("Usuário não encontrado");
+                System.Windows.MessageBox.Show($"Não foi possivel exclui os dados do banco de dados {ex.Number} {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Erro ao execurar a operação {ex.Message}");
+            }
+            //if (_users.Contains(user))
+            //{
+            //    _users.Remove(user);
+            //    //SaveUsers();
+            //}
+            //else
+            //{
+            //    throw new InvalidOperationException("Usuário não encontrado");
+            //}
         }
 
         public void LoadUsers()
