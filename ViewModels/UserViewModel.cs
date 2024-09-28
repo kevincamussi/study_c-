@@ -163,7 +163,10 @@ namespace teste.ViewModels
         {
             if (SelectedUser != null)
             {
+
                 _userRepository.RemoveUser(SelectedUser);
+                Users.Remove(SelectedUser);
+                //_userRepository.LoadUsers();
                 SelectedUser = null;
                 OnPropertyChanged(nameof(Users));
             }

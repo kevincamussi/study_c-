@@ -25,7 +25,7 @@ namespace teste.Repositories
             _users = new ObservableCollection<User>();
             _connectionString = "Server=localhost;Database=users;User ID=root;Password=ca7458990;SslMode=None;";
             LoadUsers();
-            //_nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
+            _nextId = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
         }
 
         public ObservableCollection<User> GetUsers() => _users;
@@ -36,21 +36,20 @@ namespace teste.Repositories
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            //user.Id = _nextId++;
+            user.Id = _nextId++;
             //_users.Add(user);
             //SaveUsers();
             try
             {
-                _users.Add(user);
                 using (var connection = new MySqlConnection(_connectionString))
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
                     command.CommandText = @"
-                INSERT INTO usuarios (nome, email, cidade, regiao, cep, pais, telefone)
-                VALUES (@Nome, @Email, @Cidade, @Regiao, @Cep, @Pais, @Telefone)";
+                INSERT INTO usuarios (id, nome, email, cidade, regiao, cep, pais, telefone)
+                VALUES (@Id, @Nome, @Email, @Cidade, @Regiao, @Cep, @Pais, @Telefone)";
 
-                    //command.Parameters.AddWithValue("@Id", user.Id);
+                    command.Parameters.AddWithValue("@Id", user.Id);
                     command.Parameters.AddWithValue("@Nome", user.Name);
                     command.Parameters.AddWithValue("@Email", user.Email);
                     command.Parameters.AddWithValue("@Cidade", user.City);
@@ -60,8 +59,10 @@ namespace teste.Repositories
                     command.Parameters.AddWithValue("@Telefone", user.Phone);
 
                     command.ExecuteNonQuery();
+                    _users.Add(user);
+
                 }
-                
+
             }
             catch (MySqlException ex)
             {
@@ -103,8 +104,14 @@ namespace teste.Repositories
                     command.CommandText = "DELETE FROM usuarios WHERE id = @Id";
                     command.Parameters.AddWithValue("@Id", user.Id);
                     command.ExecuteNonQuery();
+
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    _users.Remove(user);
                 }
-                _users.Remove(user);
+                }
+                    //_users.Remove(user);
             }
             catch (MySqlException ex)
             {
