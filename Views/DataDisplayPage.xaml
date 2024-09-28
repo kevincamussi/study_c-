@@ -56,7 +56,31 @@
                     </Button.Style>
                 </Button>
 
-                <Button Width="400" Content="Voltar para página inicial" Command="{Binding NavigateToHomeCommand}" />
+                <Button Width="400" Content="Voltar para página inicial" Command="{Binding NavigateToHomeCommand}" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#2bffed"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" 
+                                                 CornerRadius="4" 
+                                                 BorderBrush="{TemplateBinding BorderBrush}" 
+                                                 BorderThickness="{TemplateBinding BorderThickness}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#078c81"/>
+                                                <Setter  Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
         </StackPanel>
     </Grid>
     </ScrollViewer>

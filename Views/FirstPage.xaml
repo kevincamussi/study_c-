@@ -33,15 +33,28 @@
             <TextBlock Text="Digite seu telefone"/>
             <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="0,8"/>
 
-            <Button Background="LightGreen" Content="Submit" Command="{Binding SubmitCommand}" Margin="0,10,0,0" Width="200" HorizontalAlignment="Left" >
+            <Button Content="Submit" Command="{Binding SubmitCommand}" Margin="0,10,0,0" Width="200" HorizontalAlignment="Left" >
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="LightGray"/>
-                                <Setter  Property="Cursor" Value="Hand"/>
-                            </Trigger>
-                        </Style.Triggers>
+                        <Setter Property="Background" Value="#00e60b"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" 
+                                         CornerRadius="4" 
+                                         BorderBrush="{TemplateBinding BorderBrush}" 
+                                         BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#03940a"/>
+                                            <Setter  Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </Button.Style>
             </Button>
