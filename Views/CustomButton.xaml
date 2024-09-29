@@ -25,10 +25,16 @@
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
+                             
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="{Binding HoverBackground, ElementName=customButton}"/>
                                     <Setter Property="Cursor" Value="Hand"/>
                                 </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Cursor" Value="No"/>
+                                    <Setter Property="Background" Value="#636363" />
+                                </Trigger>
+                           
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
