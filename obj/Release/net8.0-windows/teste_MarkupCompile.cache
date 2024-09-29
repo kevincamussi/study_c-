@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\projetos\visual-studio\study_c-\obj\Debug\net8.0-windows\
+E:\projetos\visual-studio\study_c-\obj\Release\net8.0-windows\
 teste
 none
 false
-TRACE;DEBUG;NET;NET8_0;NETCOREAPP
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP
 E:\projetos\visual-studio\study_c-\App.xaml
 4414633593
 
-121192657733
+12-260875945
 207-1458115127
 MainWindow.xaml;Views\CustomButton.xaml;Views\DataDisplayPage.xaml;Views\FirstPage.xaml;
 
-False
+True
 

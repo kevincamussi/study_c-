@@ -1656,11 +1656,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\projetos\\visual-studio\\teste\\teste.csproj",
+      "projectUniqueName": "E:\\projetos\\visual-studio\\study_c-\\teste.csproj",
       "projectName": "teste",
-      "projectPath": "E:\\projetos\\visual-studio\\teste\\teste.csproj",
+      "projectPath": "E:\\projetos\\visual-studio\\study_c-\\teste.csproj",
       "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
-      "outputPath": "E:\\projetos\\visual-studio\\teste\\obj\\",
+      "outputPath": "E:\\projetos\\visual-studio\\study_c-\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",

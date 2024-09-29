@@ -12,9 +12,13 @@ Visual Studio: Recommended for running the WPF application.
 
 ### Setup Instructions
 
-**1. Create the Database**
+**1. Create the Database and clone repository**  
+**1.1:** First clone the repository using the command:
+```git
+git clone -b teste-login --single-branch https://github.com/kevincamussi/study_c-.git
+```
 
-To create the database named users, execute the following SQL command in your MySQL environment:
+**1.2**: To create the database named users, execute the following SQL command in your MySQL environment:
 
 ```sql
 CREATE DATABASE users;
