@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using teste.Commands;
@@ -286,9 +287,23 @@ namespace teste.ViewModels
         {
             if (SelectedUser != null)
             {
-                _userRepository.UpdateUser(SelectedUser);
-                _userRepository.LoadUsers();
-                IsEditingAnyUser = false;
+                {
+                    var allUsers = _userRepository.GetUsers(); 
+
+                    bool exists = allUsers.Any(u =>
+                        u.Name.Equals(SelectedUser.Name, StringComparison.OrdinalIgnoreCase) && u.Id != SelectedUser.Id);
+
+                    if (exists)
+                    {
+                        MessageBox.Show("Já existe um usuário com este nome.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return; 
+                    }
+
+
+                    _userRepository.UpdateUser(SelectedUser);
+                    _userRepository.LoadUsers();
+                    IsEditingAnyUser = false;
+                }
             }
         }
 
