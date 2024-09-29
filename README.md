@@ -46,7 +46,7 @@ CREATE TABLE usuarios (
 
 **3. Running the Application**
 
-**Open the Project:** Open the project in Visual Studio 2022.
+**Open the Project:** Open the project in Visual Studio 2022.  
 **Start the Application:** Run the application by pressing F5 or clicking the Start button.
 
 **4. Using the Application**
