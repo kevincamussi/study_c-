@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 E:\projetos\visual-studio\teste\App.xaml
-3-2009868226
+4414633593
 
-13-807528981
+14-1498981411
 207-1458115127
-MainWindow.xaml;Views\DataDisplayPage.xaml;Views\FirstPage.xaml;
+MainWindow.xaml;Views\CustomButton.xaml;Views\DataDisplayPage.xaml;Views\FirstPage.xaml;
 
 True
 

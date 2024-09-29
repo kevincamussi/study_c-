@@ -33,31 +33,8 @@
             <TextBlock Text="Digite seu telefone"/>
             <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="0,8"/>
 
-            <Button Content="Submit" Command="{Binding SubmitCommand}" Margin="0,10,0,0" Width="200" HorizontalAlignment="Left" >
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#00e60b"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" 
-                                         CornerRadius="4" 
-                                         BorderBrush="{TemplateBinding BorderBrush}" 
-                                         BorderThickness="{TemplateBinding BorderThickness}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#03940a"/>
-                                            <Setter  Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <local:CustomButton ButtonContent="Salvar" ButtonCommand="{Binding SubmitCommand}" ButtonBackground="#00ff37" HoverBackground="#02b528" Width="200"/>
+
 
         </StackPanel>
     </Grid>

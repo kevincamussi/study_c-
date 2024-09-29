@@ -30,111 +30,54 @@
 
                                 <TextBlock Text="{Binding Name}" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding Name}"  HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding Name}"    MinWidth="600" Margin="20, 0" 
                                  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                
                                 <TextBlock Text="{Binding Email}" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding Email}"   HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding Email}"    MinWidth="600" Margin="20, 0" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                 <TextBlock Text="{Binding City}" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding City}"   HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding City}"   MinWidth="600" Margin="20, 0" 
                                  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                 <TextBlock Text="{Binding Region}" 
                                  Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding Region}"   HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding Region}"   MinWidth="600" Margin="20, 0" 
                                  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
 
                                 <TextBlock Text="{Binding PostalCode}" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding PostalCode}"   HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding PostalCode}"  MinWidth="600" Margin="20, 0" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                 <TextBlock Text="{Binding Country}" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding Country}"   HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding Country}"    MinWidth="600" Margin="20, 0" 
                                  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                 <TextBlock Text="{Binding Phone}" 
                                  Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding Phone}"   HorizontalAlignment="Stretch" 
+                                <TextBox Text="{Binding Phone}"    MinWidth="600" Margin="20, 0" 
                                 Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-
-
-
-
-
-
-                                <!--<TextBlock Text="{Binding Email}"/>
-                                <TextBlock Text="{Binding City}" />
-                                <TextBlock Text="{Binding Region}"/>
-                                <TextBlock Text="{Binding PostalCode}" />
-                                <TextBlock Text="{Binding Country}"/>
-                                <TextBlock Text="{Binding Phone}"/>-->
-                            </StackPanel>
+            </StackPanel>
 
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Button Width="400" Content="Remover Usuário" Command="{Binding RemoveUserCommand}" Margin="0,20" >
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#ff1e00"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}" 
-                                                CornerRadius="4" 
-                                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                                BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#b01602"/>
-                                                <Setter  Property="Cursor" Value="Hand"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
 
-                <Button Width="400" Content="Voltar para página inicial" Command="{Binding NavigateToHomeCommand}" >
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#2bffed"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}" 
-                                                 CornerRadius="4" 
-                                                 BorderBrush="{TemplateBinding BorderBrush}" 
-                                                 BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#078c81"/>
-                                                <Setter  Property="Cursor" Value="Hand"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Content="Editar" Command="{Binding EditUserCommand}" />
-                <Button Content="Salvar" Command="{Binding SaveUserCommand}" />
+                <local:CustomButton ButtonContent="Editar" ButtonCommand="{Binding EditUserCommand}" ButtonBackground="#00a6ff" HoverBackground="#067dbd" Width="400" />
+
+                <local:CustomButton ButtonContent="Salvar" ButtonCommand="{Binding SaveUserCommand}" ButtonBackground="#00ff37" HoverBackground="#02b528" Width="400"/>
+
+                <local:CustomButton ButtonContent="Remover" ButtonCommand="{Binding RemoveUserCommand}" ButtonBackground="#ff1100" HoverBackground="#ba0c00" Width="400"/>
+
+                <local:CustomButton ButtonContent="Voltar" ButtonCommand="{Binding NavigateToHomeCommand}" ButtonBackground="#05fffb" HoverBackground="#00adab" Width="400"/>
+
             </StackPanel>
         </Grid>
     </ScrollViewer>
