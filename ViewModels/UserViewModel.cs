@@ -39,6 +39,7 @@ namespace teste.ViewModels
         private int _id;
 
         
+
         // Validações
         [Required(ErrorMessage = "Nome é obrigatório")]
 
@@ -145,6 +146,17 @@ namespace teste.ViewModels
             EditUserCommand = new RelayCommand(ExecuteEditUser);
             SaveUserCommand = new RelayCommand(ExecuteSaveUser);
             NavigateToHomeCommand = new RelayCommand(ExecuteNavigateToHome);
+        }
+
+        private bool _isEditingAnyUser;
+        public bool IsEditingAnyUser
+        {
+            get { return _isEditingAnyUser; }
+            set
+            {
+                _isEditingAnyUser = value;
+                OnPropertyChanged(nameof(IsEditingAnyUser));
+            }
         }
 
         //Método para voltar para pagina inicial
@@ -265,6 +277,7 @@ namespace teste.ViewModels
             if (SelectedUser != null)
             {
                 SelectedUser.IsEditing = true; // Ativa o modo de edição
+                IsEditingAnyUser = true;
             }
         }
 
@@ -274,9 +287,8 @@ namespace teste.ViewModels
             if (SelectedUser != null)
             {
                 _userRepository.UpdateUser(SelectedUser);
-                //SelectedUser.IsEditing = false; // Desativa o modo de edição
-                _userRepository.LoadUsers();            // Recarregar a lista de usuários se necessário
-                                                        //_userRepository.LoadUsers();
+                _userRepository.LoadUsers();
+                IsEditingAnyUser = false;
             }
         }
 
